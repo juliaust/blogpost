@@ -33,6 +33,9 @@ public class PostCache {
     public void refreshQue() {
         Sort sort = new Sort(Sort.Direction.DESC, "voteCount", "updated");
         Integer postsNumber = toIntExact(postRepository.count());
+        if(postsNumber == 0) {
+            return;
+        }
         Integer lastIdx = postsNumber > MAX_CACHE_SIZE ? MAX_CACHE_SIZE - 1 : postsNumber - 1;
         List<Post> refreshedList = postRepository.findAll(sort).subList(0, lastIdx);
         currentPosts = refreshedList;

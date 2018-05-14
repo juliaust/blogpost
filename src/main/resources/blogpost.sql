@@ -5,9 +5,9 @@ USE blogpost;
 DROP TABLE IF EXISTS user_upvoted_post;
 DROP TABLE IF EXISTS user_downvoted_post;
 DROP TABLE IF EXISTS post;
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS post_user;
 
-CREATE table `user`(
+CREATE table post_user(
 	id bigint(20) NOT NULL auto_increment,
     `name` varchar(50) DEFAULT NULL,
     PRIMARY KEY (id)
@@ -19,12 +19,12 @@ CREATE TABLE post(
     user_id bigint(20) NOT NULL,
     `text` varchar(1000) DEFAULT NULL,
     vote_count int(11) default 0,
-    created DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     KEY user_id (`user_id`),
 	CONSTRAINT `posts_ibfk_1` 
-      FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)  ON DELETE CASCADE
+      FOREIGN KEY (`user_id`) REFERENCES `post_user` (`id`)  ON DELETE CASCADE
 ) ENGINE=INNODB;
 
 CREATE TABLE `user_upvoted_post` (
@@ -33,7 +33,7 @@ CREATE TABLE `user_upvoted_post` (
   PRIMARY KEY (`user_id`,`post_id`),
   KEY `post_id` (`post_id`),
   CONSTRAINT `user_upvoted_post_ibfk_1` 
-   FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+   FOREIGN KEY (`user_id`) REFERENCES `post_user` (`id`) ON DELETE CASCADE,
   CONSTRAINT `user_upvoted_post_ibfk_2` 
    FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB;
@@ -44,7 +44,7 @@ CREATE TABLE `user_downvoted_post` (
   PRIMARY KEY (`user_id`,`post_id`),
   KEY `post_id` (`post_id`),
   CONSTRAINT `user_downvoted_post_ibfk_1` 
-   FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+   FOREIGN KEY (`user_id`) REFERENCES `post_user` (`id`) ON DELETE CASCADE,
   CONSTRAINT `user_downvoted_post_ibfk_2` 
    FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB;
