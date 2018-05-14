@@ -36,7 +36,7 @@ public class PostCache {
         if(postsNumber == 0) {
             return;
         }
-        Integer lastIdx = postsNumber > MAX_CACHE_SIZE ? MAX_CACHE_SIZE - 1 : postsNumber - 1;
+        Integer lastIdx = postsNumber > MAX_CACHE_SIZE ? MAX_CACHE_SIZE : postsNumber;
         List<Post> refreshedList = postRepository.findAll(sort).subList(0, lastIdx);
         currentPosts = refreshedList;
     }

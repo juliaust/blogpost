@@ -10,7 +10,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class BlogpostApplicationTests {
 
-	@Ignore
 	@Test
 	public void contextLoads() {
 	}
