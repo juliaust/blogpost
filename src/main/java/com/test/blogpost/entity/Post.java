@@ -19,7 +19,10 @@ public class Post
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String text;
+    private String url;
+
+    @Column(name = "post_name")
+    private String postName;
 
     @Column(name = "vote_count")
     private Integer voteCount = 0;
@@ -47,20 +50,20 @@ public class Post
         this.id = id;
     }
 
-    public String getText() {
-        return text;
+    public String getUrl() {
+        return url;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public User getUser() {
-        return user;
+    public String getPostName() {
+        return postName;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setPostName(String postName) {
+        this.postName = postName;
     }
 
     public Integer getVoteCount() {
@@ -87,15 +90,12 @@ public class Post
         this.updated = updated;
     }
 
-    @Override
-    public String toString() {
-        return "Post{" +
-                "id=" + id +
-                ", text='" + text + '\'' +
-                ", voteCount=" + voteCount +
-                ", created=" + created +
-                ", updated=" + updated +
-                '}';
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -104,7 +104,8 @@ public class Post
         if (o == null || getClass() != o.getClass()) return false;
         Post post = (Post) o;
         return Objects.equals(id, post.id) &&
-                Objects.equals(text, post.text) &&
+                Objects.equals(url, post.url) &&
+                Objects.equals(postName, post.postName) &&
                 Objects.equals(voteCount, post.voteCount) &&
                 Objects.equals(created, post.created) &&
                 Objects.equals(updated, post.updated);
@@ -113,6 +114,18 @@ public class Post
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, text, voteCount, created, updated);
+        return Objects.hash(id, url, postName, voteCount, created, updated);
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", url='" + url + '\'' +
+                ", postName='" + postName + '\'' +
+                ", voteCount=" + voteCount +
+                ", created=" + created +
+                ", updated=" + updated +
+                '}';
     }
 }

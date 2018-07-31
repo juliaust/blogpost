@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS post_user;
 
 CREATE table post_user(
 	id bigint(20) NOT NULL auto_increment,
+	local_id bigint(20) NOT NULL,
     `name` varchar(50) DEFAULT NULL,
     PRIMARY KEY (id)
 ) ENGINE=INNODB; 
@@ -17,7 +18,8 @@ CREATE table post_user(
 CREATE TABLE post(
 	id bigint(20) NOT NULL auto_increment,
     user_id bigint(20) NOT NULL,
-    `text` varchar(1000) DEFAULT NULL,
+    url varchar(1000) DEFAULT NULL,
+    post_name varchar(64) DEFAULT NULL,
     vote_count int(11) default 0,
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

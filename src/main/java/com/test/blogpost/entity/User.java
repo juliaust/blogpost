@@ -17,6 +17,9 @@ public class User
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "local_id")
+    private Long localId;
+
     @Column
     private String name;
 
@@ -79,10 +82,19 @@ public class User
         this.upvotedPosts = upvotedPosts;
     }
 
+    public Long getLocalId() {
+        return localId;
+    }
+
+    public void setLocalId(Long localId) {
+        this.localId = localId;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
+                ", localId=" + localId +
                 ", name='" + name + '\'' +
                 ", posts=" + posts +
                 ", downvotedPosts=" + downvotedPosts +
@@ -96,12 +108,13 @@ public class User
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return Objects.equals(id, user.id) &&
+                Objects.equals(localId, user.localId) &&
                 Objects.equals(name, user.name);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, name);
+        return Objects.hash(id, localId, name);
     }
 }
