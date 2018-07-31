@@ -18,7 +18,7 @@ public class User
     private Long id;
 
     @Column(name = "local_id")
-    private Long localId;
+    private String localId;
 
     @Column
     private String name;
@@ -82,11 +82,11 @@ public class User
         this.upvotedPosts = upvotedPosts;
     }
 
-    public Long getLocalId() {
+    public String getLocalId() {
         return localId;
     }
 
-    public void setLocalId(Long localId) {
+    public void setLocalId(String localId) {
         this.localId = localId;
     }
 

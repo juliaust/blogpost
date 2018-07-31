@@ -29,6 +29,7 @@ public class UserRestController {
     ResponseEntity<User> createUser(@RequestBody User body) {
         User user = new User();
         user.setName(body.getName());
+        user.setLocalId(body.getLocalId());
         User createdUser = userRepository.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }

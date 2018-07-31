@@ -17,7 +17,7 @@ CREATE table post_user(
 
 CREATE TABLE post(
 	id bigint(20) NOT NULL auto_increment,
-    user_id bigint(20) NOT NULL,
+    user_id varchar(20) DEFAULT NULL,
     url varchar(1000) DEFAULT NULL,
     post_name varchar(64) DEFAULT NULL,
     vote_count int(11) default 0,
