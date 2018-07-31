@@ -49,7 +49,8 @@ public class PostRestController {
         User user = Util.validateUserExists(userId, userRepository);
         Post post = new Post();
         post.setUser(user);
-        post.setText(body.getText());
+        post.setUrl(body.getUrl());
+        post.setPostName(body.getPostName());
         post.setCreated(Util.convertToDateViaInstant(LocalDateTime.now()));
         post.setUpdated(Util.convertToDateViaInstant(LocalDateTime.now()));
         Post createdPost = postRepository.save(post);
@@ -59,7 +60,8 @@ public class PostRestController {
     @RequestMapping(method = RequestMethod.PUT, value = "/{postId}", produces = "application/json", consumes = "application/json")
     ResponseEntity<Post> updatePost(@PathVariable Long userId, @PathVariable Long postId, @RequestBody Post body) {
         Post post = Util.validateUserPerm(userId, postId, postRepository);
-        post.setText(body.getText());
+        post.setUrl(body.getUrl());
+        post.setPostName(body.getPostName());
         post.setUpdated(Util.convertToDateViaInstant(LocalDateTime.now()));
         Post updatedPost = postRepository.save(post);
         return ResponseEntity.ok(updatedPost);

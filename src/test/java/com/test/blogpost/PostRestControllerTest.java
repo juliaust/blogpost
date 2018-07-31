@@ -13,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -57,11 +56,13 @@ public class PostRestControllerTest {
 
         post1.setId(1L);
         post1.setVoteCount(0);
-        post1.setText("text1");
+        post1.setUrl("text1");
+        post1.setPostName("post2");
 
         post2.setId(2L);
-        post1.setVoteCount(-1);
-        post1.setText("text2");
+        post2.setVoteCount(-1);
+        post2.setUrl("text2");
+        post2.setPostName("name2");
 
         user.setId(1L);
         user.setPosts(Sets.newHashSet(post1, post2));
