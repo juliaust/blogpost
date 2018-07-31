@@ -2,6 +2,7 @@ package com.test.blogpost.controller;
 
 import com.test.blogpost.Util;
 import com.test.blogpost.cache.PostCache;
+import com.test.blogpost.dto.PostDTO;
 import com.test.blogpost.entity.Post;
 import com.test.blogpost.entity.User;
 import com.test.blogpost.exception.PostNotFoundException;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -31,21 +31,21 @@ public class PostRestController {
     @Autowired
     private PostCache cache;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     Collection<Post> readPosts(@PathVariable Long userId) {
         User user = Util.validateUserExists(userId, userRepository);
         return this.postRepository.findByUser(user);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{postId}")
+    @GetMapping(value = "/{postId}")
     Post readPost(@PathVariable Long userId, @PathVariable Long postId) {
         Util.validateUserExists(userId, userRepository);
         return postRepository.findById(postId)
                 .orElseThrow(() -> new PostNotFoundException(postId));
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
-    ResponseEntity<Post> createPost(@PathVariable Long userId, @RequestBody Post body) {
+    @PostMapping(produces = "application/json", consumes = "application/json")
+    ResponseEntity<Post> createPost(@PathVariable Long userId, @RequestBody PostDTO body) {
         User user = Util.validateUserExists(userId, userRepository);
         Post post = new Post();
         post.setUser(user);
@@ -57,8 +57,8 @@ public class PostRestController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPost);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/{postId}", produces = "application/json", consumes = "application/json")
-    ResponseEntity<Post> updatePost(@PathVariable Long userId, @PathVariable Long postId, @RequestBody Post body) {
+    @PutMapping(value = "/{postId}", produces = "application/json", consumes = "application/json")
+    ResponseEntity<Post> updatePost(@PathVariable Long userId, @PathVariable Long postId, @RequestBody PostDTO body) {
         Post post = Util.validateUserPerm(userId, postId, postRepository);
         post.setUrl(body.getUrl());
         post.setPostName(body.getPostName());
@@ -68,8 +68,8 @@ public class PostRestController {
     }
 
     @Transactional
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{postId}")
-    ResponseEntity<?> deletePost(@PathVariable Long userId, @PathVariable Long postId) {
+    @DeleteMapping(value = "/{postId}")
+    ResponseEntity<Object> deletePost(@PathVariable Long userId, @PathVariable Long postId) {
         User user = Util.validateUserExists(userId, userRepository);
         Post post = Util.validateUserPerm(userId, postId, postRepository);
         Set<Post> posts = user.getPosts();

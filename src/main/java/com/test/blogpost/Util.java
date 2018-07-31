@@ -13,7 +13,7 @@ import java.time.ZoneId;
 import java.util.Date;
 
 public class Util {
-    private Util(){};
+    private Util(){}
 
     public static User validateUserExists(Long userId, UserRepository userRepository) {
         return userRepository.findById(userId)
@@ -32,8 +32,6 @@ public class Util {
     }
 
     public static Date convertToDateViaInstant(LocalDateTime dateToConvert) {
-        return java.util.Date
-                .from(dateToConvert.atZone(ZoneId.systemDefault())
-                        .toInstant());
+        return java.util.Date.from(dateToConvert.atZone(ZoneId.systemDefault()).toInstant());
     }
 }

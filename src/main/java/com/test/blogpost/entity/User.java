@@ -2,15 +2,17 @@ package com.test.blogpost.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 @Table(name = "post_user")
+@Data
+@NoArgsConstructor
 public class User
 {
     @Id
@@ -41,80 +43,4 @@ public class User
             inverseJoinColumns = { @JoinColumn(name = "post_id") }
     )
     private Set<Post> upvotedPosts = new HashSet<>();
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(Set<Post> posts) {
-        this.posts = posts;
-    }
-
-    public Set<Post> getDownvotedPosts() {
-        return downvotedPosts;
-    }
-
-    public void setDownvotedPosts(Set<Post> downvotedPosts) {
-        this.downvotedPosts = downvotedPosts;
-    }
-
-    public Set<Post> getUpvotedPosts() {
-        return upvotedPosts;
-    }
-
-    public void setUpvotedPosts(Set<Post> upvotedPosts) {
-        this.upvotedPosts = upvotedPosts;
-    }
-
-    public String getLocalId() {
-        return localId;
-    }
-
-    public void setLocalId(String localId) {
-        this.localId = localId;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", localId=" + localId +
-                ", name='" + name + '\'' +
-                ", posts=" + posts +
-                ", downvotedPosts=" + downvotedPosts +
-                ", upvotedPosts=" + upvotedPosts +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(localId, user.localId) &&
-                Objects.equals(name, user.name);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, localId, name);
-    }
 }

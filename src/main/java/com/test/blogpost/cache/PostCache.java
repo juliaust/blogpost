@@ -32,12 +32,11 @@ public class PostCache {
     @Scheduled(fixedDelay = 10000)
     public void refreshQue() {
         Sort sort = new Sort(Sort.Direction.DESC, "voteCount", "updated");
-        Integer postsNumber = toIntExact(postRepository.count());
+        int postsNumber = toIntExact(postRepository.count());
         if(postsNumber == 0) {
             return;
         }
-        Integer lastIdx = postsNumber > MAX_CACHE_SIZE ? MAX_CACHE_SIZE : postsNumber;
-        List<Post> refreshedList = postRepository.findAll(sort).subList(0, lastIdx);
-        currentPosts = refreshedList;
+        int lastIdx = postsNumber > MAX_CACHE_SIZE ? MAX_CACHE_SIZE : postsNumber;
+        currentPosts = postRepository.findAll(sort).subList(0, lastIdx);
     }
 }

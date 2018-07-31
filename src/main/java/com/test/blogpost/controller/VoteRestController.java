@@ -1,6 +1,7 @@
 package com.test.blogpost.controller;
 
 import com.test.blogpost.Util;
+import com.test.blogpost.dto.PostDTO;
 import com.test.blogpost.entity.Post;
 import com.test.blogpost.entity.User;
 import com.test.blogpost.exception.PostNotFoundException;
@@ -24,8 +25,8 @@ public class VoteRestController {
     @Autowired
     private PostRepository postRepository;
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/upvote")
-    ResponseEntity<?> upvotePost(@PathVariable Long userId, @PathVariable Long postId, @RequestBody Post body) {
+    @PutMapping(value = "/upvote")
+    ResponseEntity<Object> upvotePost(@PathVariable Long userId, @PathVariable Long postId, @RequestBody PostDTO body) {
         User user = Util.validateUserExists(userId, userRepository);
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new PostNotFoundException(postId));
@@ -48,8 +49,8 @@ public class VoteRestController {
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/downvote")
-    ResponseEntity<?> downvotePost(@PathVariable Long userId, @PathVariable Long postId, @RequestBody Post body) {
+    @PutMapping(value = "/downvote")
+    ResponseEntity<Object> downvotePost(@PathVariable Long userId, @PathVariable Long postId, @RequestBody PostDTO body) {
         User user = Util.validateUserExists(userId, userRepository);
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new PostNotFoundException(postId));
